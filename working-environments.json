@@ -1,0 +1,2162 @@
+{
+  "apiVersion": "3.2.0",
+  "swaggerVersion": "1.2",
+  "basePath": "http://13.90.211.181/occm/api",
+  "resourcePath": "/working-environments",
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "apis": [
+    {
+      "path": "/working-environments/actionRequired/{tenantId}",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "<b>Returns all non prem working environment actions required in a givent tenant</b>.",
+          "notes": "",
+          "type": "TenantActionsRequiredResponse",
+          "nickname": "actionsRequired",
+          "parameters": [
+            {
+              "name": "tenantId",
+              "description": "Public Id of tenant",
+              "required": false,
+              "type": "string",
+              "paramType": "path",
+              "allowMultiple": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/working-environments",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "<b>Retrieves all working environments</b>.",
+          "notes": "",
+          "type": "WorkingEnvironments",
+          "nickname": "workingEnvironments",
+          "parameters": [
+            {
+              "name": "tenantId",
+              "description": "Filter working environments by tenantId. Required for Oncloud Admin if performing operation requesting specific fields",
+              "required": false,
+              "type": "string",
+              "paramType": "query",
+              "allowMultiple": false
+            },
+            {
+              "name": "fields",
+              "required": false,
+              "type": "string",
+              "paramType": "query",
+              "allowMultiple": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/working-environments/exists/{workingEnvironmentName}",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "<b>Returns true if working environment with that name already exists, false otherwise</b>.",
+          "notes": "",
+          "type": "boolean",
+          "nickname": "workingEnvironmentsByName",
+          "parameters": [
+            {
+              "name": "workingEnvironmentName",
+              "description": "Working environment name",
+              "required": false,
+              "type": "string",
+              "paramType": "path",
+              "allowMultiple": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "models": {
+    "CloudSyncRelationship": {
+      "id": "CloudSyncRelationship",
+      "required": [
+        "volumeName",
+        "relationshipStatus",
+        "s3Location",
+        "id"
+      ],
+      "properties": {
+        "volumeName": {
+          "type": "string"
+        },
+        "relationshipStatus": {
+          "type": "string"
+        },
+        "s3Location": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "failureMessage": {
+          "type": "string"
+        }
+      }
+    },
+    "SupportedCapacityTiersResponse": {
+      "id": "SupportedCapacityTiersResponse",
+      "required": [
+        "volumeType",
+        "supportedCapacityTiers"
+      ],
+      "properties": {
+        "volumeType": {
+          "type": "string"
+        },
+        "supportedCapacityTiers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "SupportRegistrationProperties": {
+      "id": "SupportRegistrationProperties",
+      "required": [
+        "supportRegistrationStatus",
+        "licenseExpiryDate"
+      ],
+      "properties": {
+        "supportRegistrationStatus": {
+          "type": "string"
+        },
+        "licenseExpiryDate": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "BroadcastDomainInfo": {
+      "id": "BroadcastDomainInfo",
+      "required": [
+        "broadcastDomain",
+        "ipSpace",
+        "mtu"
+      ],
+      "properties": {
+        "broadcastDomain": {
+          "type": "string"
+        },
+        "ipSpace": {
+          "type": "string"
+        },
+        "mtu": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "CapacityFeatures": {
+      "id": "CapacityFeatures",
+      "required": [
+        "providerVolumesType",
+        "defaultProviderVolumeType",
+        "supportedCapacityTiers",
+        "maxDisksPerAggregate",
+        "existingIops"
+      ],
+      "properties": {
+        "providerVolumesType": {
+          "type": "array",
+          "items": {
+            "$ref": "ProviderVolumeTypeResponse"
+          }
+        },
+        "defaultProviderVolumeType": {
+          "$ref": "DefaultProviderVolume"
+        },
+        "supportedCapacityTiers": {
+          "$ref": "SupportedCapacityTiers"
+        },
+        "maxDisksPerAggregate": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "existingIops": {
+          "type": "array",
+          "items": {
+            "$ref": "Object"
+          }
+        }
+      }
+    },
+    "DataBrokerPlacement": {
+      "id": "DataBrokerPlacement",
+      "required": [
+        "vpcId",
+        "subnetId",
+        "instanceType",
+        "instanceId",
+        "keyPair"
+      ],
+      "properties": {
+        "vpcId": {
+          "type": "string"
+        },
+        "subnetId": {
+          "type": "string"
+        },
+        "instanceType": {
+          "type": "string"
+        },
+        "instanceId": {
+          "type": "string"
+        },
+        "keyPair": {
+          "type": "string"
+        }
+      }
+    },
+    "OnPremWorkingEnvironmentResponse": {
+      "id": "OnPremWorkingEnvironmentResponse",
+      "required": [
+        "publicId",
+        "tenantId",
+        "description",
+        "name",
+        "discoverUserEmail",
+        "location",
+        "workingEnvironmentType"
+      ],
+      "properties": {
+        "publicId": {
+          "type": "string"
+        },
+        "tenantId": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "discoverUserEmail": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "reservedSize": {
+          "$ref": "Capacity"
+        },
+        "status": {
+          "$ref": "StatusProperties"
+        },
+        "interClusterLifs": {
+          "type": "array",
+          "items": {
+            "$ref": "InterClusterLif"
+          }
+        },
+        "cronJobSchedules": {
+          "type": "array",
+          "items": {
+            "$ref": "CronJobSchedule"
+          }
+        },
+        "svms": {
+          "type": "array",
+          "items": {
+            "$ref": "Svm"
+          }
+        },
+        "snapshotPolicies": {
+          "type": "array",
+          "items": {
+            "$ref": "SnapshotPolicy"
+          }
+        },
+        "replicationProperties": {
+          "$ref": "ReplicationProperties",
+          "description": "Working environments in which a SnapMirror relationship exists between volumes on this working environment"
+        },
+        "clusterProperties": {
+          "$ref": "OnPremClusterProperties"
+        },
+        "ontapClusterProperties": {
+          "$ref": "OnPremClusterProperties"
+        },
+        "workingEnvironmentType": {
+          "type": "string"
+        },
+        "cloudSyncProperties": {
+          "$ref": "CloudSyncProperties"
+        },
+        "actionsRequired": {
+          "type": "array",
+          "items": {
+            "$ref": "ActionRequired"
+          }
+        }
+      }
+    },
+    "VsaLicense": {
+      "id": "VsaLicense",
+      "required": [
+        "name",
+        "capacityLimit"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "License name"
+        },
+        "capacityLimit": {
+          "$ref": "Capacity",
+          "description": "Capacity limit"
+        }
+      }
+    },
+    "InstanceResponse": {
+      "id": "InstanceResponse",
+      "description": "",
+      "required": [
+        "id",
+        "name",
+        "instanceType",
+        "state",
+        "publicIpAddress",
+        "privateIpAddress",
+        "publicDnsName",
+        "privateDnsName",
+        "imageId",
+        "subnetId",
+        "availabilityZone",
+        "tags",
+        "productCode",
+        "tenancy",
+        "keyPairName",
+        "oCCMInstance",
+        "vsaInstance"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Instance Id"
+        },
+        "name": {
+          "type": "string",
+          "description": "Instance name"
+        },
+        "instanceType": {
+          "type": "string",
+          "description": "Instance type"
+        },
+        "state": {
+          "type": "string",
+          "description": "Instance state"
+        },
+        "publicIpAddress": {
+          "type": "string",
+          "description": "Public IP address that is assigned to the instance"
+        },
+        "privateIpAddress": {
+          "type": "string",
+          "description": "Private IP address that is assigned to the instance"
+        },
+        "publicDnsName": {
+          "type": "string",
+          "description": "Public DNS"
+        },
+        "privateDnsName": {
+          "type": "string",
+          "description": "Private DNS name"
+        },
+        "imageId": {
+          "type": "string",
+          "description": "Image Id"
+        },
+        "subnetId": {
+          "type": "string",
+          "description": "Subnet Id"
+        },
+        "availabilityZone": {
+          "type": "string",
+          "description": "Availability Zone"
+        },
+        "tags": {
+          "$ref": "Map[string,string]",
+          "description": "Instance tags"
+        },
+        "productCode": {
+          "type": "string",
+          "description": "Product code"
+        },
+        "tenancy": {
+          "type": "string",
+          "description": "Instance Tenancy"
+        },
+        "keyPairName": {
+          "type": "string",
+          "description": "Key Pair"
+        },
+        "instanceProfileId": {
+          "type": "string",
+          "description": "Instance profile ID"
+        },
+        "oCCMInstance": {
+          "type": "boolean"
+        },
+        "vsaInstance": {
+          "type": "boolean"
+        }
+      }
+    },
+    "PolicySchedule": {
+      "id": "PolicySchedule",
+      "description": "",
+      "required": [
+        "frequency",
+        "retention"
+      ],
+      "properties": {
+        "frequency": {
+          "type": "string",
+          "description": "Frequency"
+        },
+        "retention": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Retention"
+        }
+      }
+    },
+    "DefaultProviderVolume": {
+      "id": "DefaultProviderVolume",
+      "required": [
+        "size",
+        "diskType"
+      ],
+      "properties": {
+        "size": {
+          "$ref": "Capacity"
+        },
+        "diskType": {
+          "type": "string"
+        },
+        "capacityTier": {
+          "type": "string"
+        },
+        "iops": {
+          "$ref": "Object"
+        }
+      }
+    },
+    "VsaSchedule": {
+      "id": "VsaSchedule",
+      "required": [
+        "name",
+        "schedule",
+        "enabled"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "schedule": {
+          "type": "array",
+          "items": {
+            "$ref": "StartStopRange"
+          }
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "OntapLicenseType": {
+      "id": "OntapLicenseType",
+      "required": [
+        "type",
+        "name",
+        "description",
+        "capacity_limit",
+        "platformLicenseRequired",
+        "default",
+        "capacityLimit"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "capacity_limit": {
+          "type": "string"
+        },
+        "platformLicenseRequired": {
+          "type": "boolean"
+        },
+        "default": {
+          "type": "boolean"
+        },
+        "capacityLimit": {
+          "$ref": "Capacity"
+        }
+      }
+    },
+    "StatusProperties": {
+      "id": "StatusProperties",
+      "required": [
+        "status",
+        "message",
+        "failureCauses"
+      ],
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "failureCauses": {
+          "$ref": "FailureCauses"
+        },
+        "extendedFailureReason": {
+          "type": "string"
+        }
+      }
+    },
+    "VolumeMoveParameters": {
+      "id": "VolumeMoveParameters",
+      "required": [
+        "volumeName",
+        "svmName",
+        "targetAggregateName",
+        "newTargetAggregate"
+      ],
+      "properties": {
+        "volumeName": {
+          "type": "string"
+        },
+        "svmName": {
+          "type": "string"
+        },
+        "targetAggregateName": {
+          "type": "string"
+        },
+        "homeNode": {
+          "type": "string"
+        },
+        "newTargetAggregate": {
+          "type": "boolean"
+        }
+      }
+    },
+    "FailureCauses": {
+      "id": "FailureCauses",
+      "required": [
+        "invalidOntapCredentials",
+        "noCloudProviderConnection",
+        "invalidCloudProviderCredentials"
+      ],
+      "properties": {
+        "invalidOntapCredentials": {
+          "type": "boolean"
+        },
+        "noCloudProviderConnection": {
+          "type": "boolean"
+        },
+        "invalidCloudProviderCredentials": {
+          "type": "boolean"
+        }
+      }
+    },
+    "MediatorVersionInfo": {
+      "id": "MediatorVersionInfo",
+      "required": [
+        "version",
+        "description",
+        "state"
+      ],
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "state": {
+          "$ref": "Value"
+        }
+      }
+    },
+    "SupportRegistrationInformation": {
+      "id": "SupportRegistrationInformation",
+      "required": [
+        "supportRegistrationStatus",
+        "serialNumber",
+        "cloudLicenseExists"
+      ],
+      "properties": {
+        "supportRegistrationStatus": {
+          "type": "string"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "licenseExpiryDate": {
+          "$ref": "Object"
+        },
+        "cloudLicenseExists": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SupportedFeatures": {
+      "id": "SupportedFeatures",
+      "required": [
+        "supportsMixedAggregates"
+      ],
+      "properties": {
+        "supportsMixedAggregates": {
+          "type": "boolean"
+        }
+      }
+    },
+    "WeActionRequiredResponse": {
+      "id": "WeActionRequiredResponse",
+      "required": [
+        "publicId",
+        "actions"
+      ],
+      "properties": {
+        "publicId": {
+          "type": "string"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "ActionRequired"
+          }
+        }
+      }
+    },
+    "CronJobSchedule": {
+      "id": "CronJobSchedule",
+      "required": [
+        "name",
+        "description",
+        "months",
+        "days",
+        "weekDays",
+        "hours",
+        "minutes"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "months": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "days": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "weekDays": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "hours": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "minutes": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    },
+    "HaProperties": {
+      "id": "HaProperties",
+      "required": [
+        "mediatorVersionInfo",
+        "mediatorStatus",
+        "routeTables",
+        "mediatorVersionsToUpdate",
+        "failoverMode"
+      ],
+      "properties": {
+        "mediatorVersionInfo": {
+          "$ref": "MediatorVersionInfo"
+        },
+        "mediatorStatus": {
+          "$ref": "MediatorStatus"
+        },
+        "routeTables": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mediatorVersionsToUpdate": {
+          "type": "array",
+          "items": {
+            "$ref": "MediatorUpdateVersionMetadata"
+          }
+        },
+        "failoverMode": {
+          "type": "string"
+        }
+      }
+    },
+    "SupportedCapacityTiers": {
+      "id": "SupportedCapacityTiers",
+      "required": [
+        "supportedCapacityTiersPerVolumeType",
+        "s3TiersDisableReasons"
+      ],
+      "properties": {
+        "supportedCapacityTiersPerVolumeType": {
+          "type": "array",
+          "items": {
+            "$ref": "SupportedCapacityTiersResponse"
+          }
+        },
+        "s3TiersDisableReasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "AwsEncryptionKey": {
+      "id": "AwsEncryptionKey",
+      "required": [
+        "keyId",
+        "status",
+        "default"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string"
+        },
+        "keyId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "validTo": {
+          "$ref": "Object"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "default": {
+          "type": "boolean"
+        }
+      }
+    },
+    "VsaWorkingEnvironmentResponse": {
+      "id": "VsaWorkingEnvironmentResponse",
+      "description": "",
+      "required": [
+        "publicId",
+        "name",
+        "tenantId",
+        "creatorUserEmail",
+        "cloudProviderName",
+        "workingEnvironmentType",
+        "hA"
+      ],
+      "properties": {
+        "publicId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tenantId": {
+          "type": "string"
+        },
+        "svmName": {
+          "type": "string"
+        },
+        "creatorUserEmail": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "StatusProperties"
+        },
+        "awsProperties": {
+          "$ref": "AwsProperties"
+        },
+        "reservedSize": {
+          "$ref": "Capacity"
+        },
+        "encryptionProperties": {
+          "$ref": "EncryptionProperties"
+        },
+        "clusterProperties": {
+          "$ref": "VsaClusterProperties"
+        },
+        "ontapClusterProperties": {
+          "$ref": "OntapClusterProperties"
+        },
+        "actionsRequired": {
+          "type": "array",
+          "items": {
+            "$ref": "ActionRequired"
+          }
+        },
+        "interClusterLifs": {
+          "type": "array",
+          "items": {
+            "$ref": "InterClusterLif"
+          }
+        },
+        "cronJobSchedules": {
+          "type": "array",
+          "items": {
+            "$ref": "CronJobSchedule"
+          }
+        },
+        "snapshotPolicies": {
+          "type": "array",
+          "items": {
+            "$ref": "SnapshotPolicy"
+          }
+        },
+        "svms": {
+          "type": "array",
+          "items": {
+            "$ref": "Svm"
+          }
+        },
+        "activeActions": {
+          "type": "array",
+          "description": "Actions currently being performed on this working environment",
+          "items": {
+            "type": "string"
+          }
+        },
+        "replicationProperties": {
+          "$ref": "ReplicationProperties",
+          "description": "Working environments in which a SnapMirror relationship exists between volumes on this working environment"
+        },
+        "schedules": {
+          "type": "array",
+          "items": {
+            "$ref": "VsaSchedule"
+          }
+        },
+        "cloudProviderName": {
+          "type": "string"
+        },
+        "workingEnvironmentType": {
+          "type": "string"
+        },
+        "supportRegistrationProperties": {
+          "$ref": "SupportRegistrationProperties"
+        },
+        "supportRegistrationInformation": {
+          "type": "array",
+          "items": {
+            "$ref": "SupportRegistrationInformation"
+          }
+        },
+        "haProperties": {
+          "$ref": "HaProperties"
+        },
+        "capacityFeatures": {
+          "$ref": "CapacityFeatures"
+        },
+        "cloudSyncProperties": {
+          "$ref": "CloudSyncProperties"
+        },
+        "supportedFeatures": {
+          "$ref": "SupportedFeatures"
+        },
+        "hA": {
+          "type": "boolean"
+        }
+      }
+    },
+    "MediatorUpdateVersionMetadata": {
+      "id": "MediatorUpdateVersionMetadata",
+      "required": [
+        "mediatorVersion",
+        "timeStamp",
+        "metadataFileName",
+        "major"
+      ],
+      "properties": {
+        "mediatorVersion": {
+          "type": "string"
+        },
+        "timeStamp": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "metadataFileName": {
+          "type": "string"
+        },
+        "major": {
+          "type": "boolean"
+        },
+        "manifestFileName": {
+          "type": "string"
+        }
+      }
+    },
+    "Value": {
+      "id": "Value",
+      "properties": {
+        "scala$Enumeration$$outerEnum": {
+          "$ref": "Enumeration"
+        }
+      }
+    },
+    "DataBrokerProperties": {
+      "id": "DataBrokerProperties",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "dataBrokerPlacement": {
+          "$ref": "DataBrokerPlacement"
+        }
+      }
+    },
+    "WorkingEnvironments": {
+      "id": "WorkingEnvironments",
+      "required": [
+        "vsaWorkingEnvironments",
+        "onPremWorkingEnvironments",
+        "azureVsaWorkingEnvironments"
+      ],
+      "properties": {
+        "vsaWorkingEnvironments": {
+          "type": "array",
+          "items": {
+            "$ref": "VsaWorkingEnvironmentResponse"
+          }
+        },
+        "onPremWorkingEnvironments": {
+          "type": "array",
+          "items": {
+            "$ref": "OnPremWorkingEnvironmentResponse"
+          }
+        },
+        "azureVsaWorkingEnvironments": {
+          "type": "array",
+          "items": {
+            "$ref": "AzureVsaWorkingEnvironmentResponse"
+          }
+        }
+      }
+    },
+    "ChangeLicenseParameters": {
+      "id": "ChangeLicenseParameters",
+      "required": [
+        "newLicenseType",
+        "newInstanceType"
+      ],
+      "properties": {
+        "newLicenseType": {
+          "$ref": "OntapLicenseType"
+        },
+        "newInstanceType": {
+          "type": "string"
+        }
+      }
+    },
+    "AwsProperties": {
+      "id": "AwsProperties",
+      "required": [
+        "regionName",
+        "availabilityZones",
+        "instances",
+        "vpc",
+        "accountId"
+      ],
+      "properties": {
+        "regionName": {
+          "type": "string"
+        },
+        "availabilityZones": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "instances": {
+          "type": "array",
+          "items": {
+            "$ref": "InstanceResponse"
+          }
+        },
+        "vpc": {
+          "$ref": "VpcBasicResponse"
+        },
+        "accountId": {
+          "type": "string"
+        }
+      }
+    },
+    "ResourcesToDelete": {
+      "id": "ResourcesToDelete",
+      "required": [
+        "instanceNameAndType",
+        "numberOfDisksAndDiskSize"
+      ],
+      "properties": {
+        "instanceNameAndType": {
+          "$ref": "List[InstanceNameIdAndType]"
+        },
+        "numberOfDisksAndDiskSize": {
+          "$ref": "List[DisksDetails]"
+        }
+      }
+    },
+    "ReplicationProperties": {
+      "id": "ReplicationProperties",
+      "required": [
+        "peers",
+        "replicationTargets"
+      ],
+      "properties": {
+        "peers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "replicationTargets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Expand": {
+      "id": "Expand",
+      "description": "",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "expands": {
+          "type": "array",
+          "items": {
+            "$ref": "Expand"
+          }
+        }
+      }
+    },
+    "MediatorStatus": {
+      "id": "MediatorStatus",
+      "required": [
+        "statusCode",
+        "statusMessage"
+      ],
+      "properties": {
+        "statusCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "statusMessage": {
+          "type": "string"
+        }
+      }
+    },
+    "LifResponse": {
+      "id": "LifResponse",
+      "description": "",
+      "required": [
+        "ip",
+        "netmask",
+        "lifType",
+        "dataProtocols",
+        "nodeName",
+        "privateIp"
+      ],
+      "properties": {
+        "ip": {
+          "type": "string",
+          "description": "Lif ip"
+        },
+        "netmask": {
+          "type": "string",
+          "description": "Lif netmask"
+        },
+        "lifType": {
+          "type": "string",
+          "description": "Lif type"
+        },
+        "dataProtocols": {
+          "type": "array",
+          "description": "List of supported protocols",
+          "items": {
+            "type": "string"
+          }
+        },
+        "nodeName": {
+          "type": "string",
+          "description": "Node name"
+        },
+        "privateIp": {
+          "type": "boolean",
+          "description": "Whether this Lif ip is a private address"
+        }
+      }
+    },
+    "CloudSyncProperties": {
+      "id": "CloudSyncProperties",
+      "required": [
+        "relationships",
+        "synced"
+      ],
+      "properties": {
+        "status": {
+          "$ref": "CloudSyncStatus"
+        },
+        "dataBrokerProperties": {
+          "$ref": "DataBrokerProperties"
+        },
+        "s3Location": {
+          "type": "string"
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "$ref": "CloudSyncRelationship"
+          }
+        },
+        "synced": {
+          "type": "boolean"
+        }
+      }
+    },
+    "CapacityTierInfo": {
+      "id": "CapacityTierInfo",
+      "required": [
+        "capacityTierUsedSize",
+        "s3BucketName"
+      ],
+      "properties": {
+        "capacityTierUsedSize": {
+          "$ref": "Capacity"
+        },
+        "s3BucketName": {
+          "type": "string"
+        }
+      }
+    },
+    "AzureResourceGroupResponse": {
+      "id": "AzureResourceGroupResponse",
+      "description": "",
+      "required": [
+        "name",
+        "location",
+        "tags"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "Map[string,string]"
+        }
+      }
+    },
+    "CertificateResponse": {
+      "id": "CertificateResponse",
+      "required": [
+        "publicId",
+        "directIssuerName",
+        "subjectName",
+        "startDate",
+        "endDate",
+        "serialNumber",
+        "certificate",
+        "certificateType"
+      ],
+      "properties": {
+        "publicId": {
+          "type": "string"
+        },
+        "directIssuerName": {
+          "type": "string"
+        },
+        "subjectName": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "endDate": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "certificate": {
+          "type": "string"
+        },
+        "certificateType": {
+          "type": "string"
+        }
+      }
+    },
+    "ActionRequired": {
+      "id": "ActionRequired",
+      "description": "",
+      "required": [
+        "actionType",
+        "parameters",
+        "severity"
+      ],
+      "properties": {
+        "actionType": {
+          "type": "string",
+          "description": "The type of the Action"
+        },
+        "parameters": {
+          "$ref": "ActionRequiredParameters",
+          "description": "The relevant parameters of the action"
+        },
+        "severity": {
+          "type": "string",
+          "description": "Action Severity"
+        }
+      }
+    },
+    "VpcBasicResponse": {
+      "id": "VpcBasicResponse",
+      "description": "",
+      "required": [
+        "vpcId",
+        "state",
+        "cidrBlock",
+        "tags",
+        "default"
+      ],
+      "properties": {
+        "vpcId": {
+          "type": "string",
+          "description": "VPC ID"
+        },
+        "state": {
+          "type": "string",
+          "description": "VPC state"
+        },
+        "cidrBlock": {
+          "type": "string",
+          "description": "VPC CIDR block"
+        },
+        "tags": {
+          "type": "array",
+          "description": "VPC tags",
+          "items": {
+            "$ref": "VpcTagResponse"
+          }
+        },
+        "default": {
+          "type": "boolean",
+          "description": "Is the VPC a default one"
+        }
+      }
+    },
+    "ProviderProperties": {
+      "id": "ProviderProperties",
+      "required": [
+        "regionName",
+        "resourceGroup",
+        "vnetCidr",
+        "tags",
+        "subscriptionId",
+        "deploymentId",
+        "creationTime",
+        "instanceType",
+        "numOfNics",
+        "singleNetworkInterface"
+      ],
+      "properties": {
+        "regionName": {
+          "type": "string"
+        },
+        "resourceGroup": {
+          "$ref": "AzureResourceGroupResponse",
+          "description": "Resource group"
+        },
+        "vnetCidr": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "Map[string,string]"
+        },
+        "subscriptionId": {
+          "type": "string"
+        },
+        "deploymentId": {
+          "type": "string"
+        },
+        "creationTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "instanceType": {
+          "type": "string"
+        },
+        "numOfNics": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "singleNetworkInterface": {
+          "type": "boolean"
+        }
+      }
+    },
+    "OnPremClusterProperties": {
+      "id": "OnPremClusterProperties",
+      "required": [
+        "clusterAddress",
+        "ontapVersion",
+        "clusterName",
+        "serialNumber",
+        "systemId",
+        "licenses",
+        "systemManagerUrl",
+        "location",
+        "snapmirrorLicenseExists"
+      ],
+      "properties": {
+        "clusterAddress": {
+          "type": "string"
+        },
+        "ontapVersion": {
+          "type": "string"
+        },
+        "clusterName": {
+          "type": "string"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "systemId": {
+          "type": "string"
+        },
+        "licenses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "systemManagerUrl": {
+          "type": "string"
+        },
+        "location": {
+          "$ref": "Value"
+        },
+        "snapmirrorLicenseExists": {
+          "type": "boolean"
+        }
+      }
+    },
+    "OntapNodeProperties": {
+      "id": "OntapNodeProperties",
+      "required": [
+        "name",
+        "lifs",
+        "serialNumber",
+        "systemId",
+        "cloudProviderId",
+        "healthy",
+        "inTakeover"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "lifs": {
+          "type": "array",
+          "items": {
+            "$ref": "LifResponse"
+          }
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "systemId": {
+          "type": "string"
+        },
+        "platformLicense": {
+          "type": "string"
+        },
+        "platformSerialNumber": {
+          "type": "string"
+        },
+        "cloudProviderId": {
+          "type": "string"
+        },
+        "healthy": {
+          "type": "boolean"
+        },
+        "inTakeover": {
+          "type": "boolean"
+        }
+      }
+    },
+    "KeyManagerResponse": {
+      "id": "KeyManagerResponse",
+      "required": [
+        "publicId",
+        "name",
+        "address",
+        "usernameField",
+        "usernameValue",
+        "status"
+      ],
+      "properties": {
+        "publicId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "usernameField": {
+          "type": "string"
+        },
+        "usernameValue": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "StartStopRange": {
+      "id": "StartStopRange",
+      "required": [
+        "stop",
+        "start"
+      ],
+      "properties": {
+        "stop": {
+          "$ref": "TimePoint"
+        },
+        "start": {
+          "$ref": "TimePoint"
+        }
+      }
+    },
+    "SnapshotPolicy": {
+      "id": "SnapshotPolicy",
+      "description": "",
+      "required": [
+        "name",
+        "schedules",
+        "description"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name"
+        },
+        "schedules": {
+          "type": "array",
+          "description": "Schedules",
+          "items": {
+            "$ref": "PolicySchedule"
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "Description"
+        }
+      }
+    },
+    "OntapClusterProperties": {
+      "id": "OntapClusterProperties",
+      "required": [
+        "nodes",
+        "clusterName",
+        "ontapVersion",
+        "systemManagerUrl",
+        "creationTime",
+        "licenseType",
+        "offboxTarget",
+        "broadcastDomainInfos",
+        "evaluation",
+        "canConfigureCapacityTier",
+        "usedCapacity"
+      ],
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "OntapNodeProperties"
+          }
+        },
+        "clusterName": {
+          "type": "string"
+        },
+        "ontapVersion": {
+          "type": "string"
+        },
+        "systemManagerUrl": {
+          "type": "string"
+        },
+        "creationTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "licenseType": {
+          "$ref": "VsaLicense"
+        },
+        "lastModifiedOffbox": {
+          "$ref": "Object"
+        },
+        "offboxTarget": {
+          "type": "boolean"
+        },
+        "upgradeVersions": {
+          "type": "array",
+          "items": {
+            "$ref": "OntapUpdateImageMetadata"
+          }
+        },
+        "writingSpeedState": {
+          "type": "string"
+        },
+        "broadcastDomainInfos": {
+          "type": "array",
+          "items": {
+            "$ref": "BroadcastDomainInfo"
+          }
+        },
+        "evaluation": {
+          "type": "boolean"
+        },
+        "capacityTierInfo": {
+          "$ref": "CapacityTierInfo"
+        },
+        "canConfigureCapacityTier": {
+          "type": "boolean"
+        },
+        "usedCapacity": {
+          "$ref": "Capacity"
+        }
+      }
+    },
+    "ActionRequiredParameters": {
+      "id": "ActionRequiredParameters",
+      "description": "",
+      "required": [
+        "aggregateName",
+        "numOfDisks",
+        "diskSize",
+        "volumeNames",
+        "maxCapacity",
+        "licenseExpiryDate",
+        "serialNumber",
+        "workingEnvironmentId",
+        "instances"
+      ],
+      "properties": {
+        "aggregateName": {
+          "type": "string",
+          "description": "Aggregate name"
+        },
+        "numOfDisks": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of disks relevant to the action"
+        },
+        "diskSize": {
+          "$ref": "Capacity",
+          "description": "The size of the disks needed"
+        },
+        "volumeNames": {
+          "type": "array",
+          "description": "A limited list of volumes on the aggregate",
+          "items": {
+            "type": "string"
+          }
+        },
+        "maxCapacity": {
+          "$ref": "Capacity",
+          "description": "The maximum capacity of the ONTAP Cloud instance"
+        },
+        "licenseExpiryDate": {
+          "type": "integer",
+          "format": "int64",
+          "description": "License expiry date"
+        },
+        "serialNumber": {
+          "type": "string",
+          "description": "Platform Serial number"
+        },
+        "volumeMoveParameters": {
+          "$ref": "VolumeMoveParameters",
+          "description": "Volume Move Parameters"
+        },
+        "workingEnvironmentId": {
+          "type": "string",
+          "description": "Working environment public id"
+        },
+        "licenseParameters": {
+          "$ref": "ChangeLicenseParameters",
+          "description": "License and instance parameters"
+        },
+        "resourcesToDelete": {
+          "$ref": "ResourcesToDelete",
+          "description": "Resources to delete if not been utilized"
+        },
+        "instances": {
+          "$ref": "List[InstanceNameIdAndType]",
+          "description": "Instances info"
+        },
+        "moreInfo": {
+          "type": "string",
+          "description": "More info"
+        },
+        "providerVolumeType": {
+          "type": "string",
+          "description": "Provider volume type"
+        }
+      }
+    },
+    "OntapUpdateImageMetadata": {
+      "id": "OntapUpdateImageMetadata",
+      "required": [
+        "imageVersion",
+        "releaseNotesUrl",
+        "lastModified",
+        "autoUpdateAllowed"
+      ],
+      "properties": {
+        "imageVersion": {
+          "type": "string"
+        },
+        "releaseNotesUrl": {
+          "type": "string"
+        },
+        "lastModified": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "autoUpdateAllowed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "EncryptionProperties": {
+      "id": "EncryptionProperties",
+      "required": [
+        "ontapEncryption",
+        "awsVolumeEncryption",
+        "azureVolumeEncryption",
+        "keyManagers",
+        "encryptionCertificates"
+      ],
+      "properties": {
+        "ontapEncryption": {
+          "type": "boolean"
+        },
+        "awsVolumeEncryption": {
+          "type": "boolean"
+        },
+        "azureVolumeEncryption": {
+          "type": "boolean"
+        },
+        "keyManagers": {
+          "type": "array",
+          "items": {
+            "$ref": "KeyManagerResponse"
+          }
+        },
+        "encryptionCertificates": {
+          "type": "array",
+          "items": {
+            "$ref": "CertificateResponse"
+          }
+        },
+        "awsEncryptionKey": {
+          "$ref": "AwsEncryptionKey"
+        }
+      }
+    },
+    "Enumeration": {
+      "id": "Enumeration",
+      "properties": {
+        "scala$Enumeration$$vmap": {
+          "$ref": "scala.collection.mutable.Map<java.lang.Object, scala.Enumeration$Value>"
+        },
+        "scala$Enumeration$$nmap": {
+          "$ref": "scala.collection.mutable.Map<java.lang.Object, java.lang.String>"
+        },
+        "nextId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "nextName": {
+          "$ref": "scala.collection.Iterator<java.lang.String>"
+        },
+        "scala$Enumeration$$topId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "scala$Enumeration$$bottomId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "ProviderVolumeTypeResponse": {
+      "id": "ProviderVolumeTypeResponse",
+      "required": [
+        "size",
+        "supportedVolumeTypes",
+        "maxDisksAllow"
+      ],
+      "properties": {
+        "size": {
+          "$ref": "Capacity"
+        },
+        "supportedVolumeTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "maxDisksAllow": {
+          "$ref": "MaxDisksAllow"
+        }
+      }
+    },
+    "Svm": {
+      "id": "Svm",
+      "required": [
+        "name",
+        "state",
+        "language",
+        "allowedAggregates"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "allowedAggregates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "TenantActionsRequiredResponse": {
+      "id": "TenantActionsRequiredResponse",
+      "required": [
+        "weActions"
+      ],
+      "properties": {
+        "weActions": {
+          "type": "array",
+          "items": {
+            "$ref": "WeActionRequiredResponse"
+          }
+        }
+      }
+    },
+    "VpcTagResponse": {
+      "id": "VpcTagResponse",
+      "description": "",
+      "required": [
+        "key",
+        "value"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "VPC tag key"
+        },
+        "value": {
+          "type": "string",
+          "description": "VPC tag value"
+        }
+      }
+    },
+    "CloudSyncStatus": {
+      "id": "CloudSyncStatus",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "failureMessage": {
+          "type": "string"
+        }
+      }
+    },
+    "Expands": {
+      "id": "Expands",
+      "description": "",
+      "properties": {
+        "raw": {
+          "type": "string"
+        },
+        "expands": {
+          "type": "array",
+          "items": {
+            "$ref": "Expand"
+          }
+        }
+      }
+    },
+    "VsaClusterProperties": {
+      "id": "VsaClusterProperties",
+      "required": [
+        "lifs",
+        "serialNumber",
+        "systemId",
+        "clusterName",
+        "ontapVersion",
+        "accountId",
+        "productCode",
+        "amiId",
+        "systemManagerUrl",
+        "creationTime",
+        "instanceId",
+        "platformLicense",
+        "licenseExpiryDate",
+        "instanceType",
+        "licenseType",
+        "offboxTarget"
+      ],
+      "properties": {
+        "lifs": {
+          "type": "array",
+          "items": {
+            "$ref": "LifResponse"
+          }
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "systemId": {
+          "type": "string"
+        },
+        "clusterName": {
+          "type": "string"
+        },
+        "ontapVersion": {
+          "type": "string"
+        },
+        "accountId": {
+          "type": "string"
+        },
+        "productCode": {
+          "type": "string"
+        },
+        "amiId": {
+          "type": "string"
+        },
+        "systemManagerUrl": {
+          "type": "string"
+        },
+        "creationTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "instanceId": {
+          "type": "string"
+        },
+        "platformLicense": {
+          "type": "string"
+        },
+        "licenseExpiryDate": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "instanceType": {
+          "type": "string"
+        },
+        "publicIp": {
+          "type": "string"
+        },
+        "publicDnsName": {
+          "type": "string"
+        },
+        "licenseType": {
+          "$ref": "VsaLicense"
+        },
+        "lastModifiedOffbox": {
+          "$ref": "Object"
+        },
+        "offboxTarget": {
+          "type": "boolean"
+        },
+        "upgradeVersions": {
+          "type": "array",
+          "items": {
+            "$ref": "OntapUpdateImageMetadata"
+          }
+        },
+        "writingSpeedState": {
+          "type": "string"
+        }
+      }
+    },
+    "AzureVsaWorkingEnvironmentResponse": {
+      "id": "AzureVsaWorkingEnvironmentResponse",
+      "description": "",
+      "required": [
+        "publicId",
+        "name",
+        "tenantId",
+        "creatorUserEmail",
+        "cloudProviderName",
+        "workingEnvironmentType"
+      ],
+      "properties": {
+        "publicId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tenantId": {
+          "type": "string"
+        },
+        "svmName": {
+          "type": "string"
+        },
+        "creatorUserEmail": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "StatusProperties"
+        },
+        "providerProperties": {
+          "$ref": "ProviderProperties"
+        },
+        "reservedSize": {
+          "$ref": "Capacity"
+        },
+        "clusterProperties": {
+          "$ref": "VsaClusterProperties"
+        },
+        "ontapClusterProperties": {
+          "$ref": "OntapClusterProperties"
+        },
+        "cloudProviderName": {
+          "type": "string"
+        },
+        "snapshotPolicies": {
+          "type": "array",
+          "items": {
+            "$ref": "SnapshotPolicy"
+          }
+        },
+        "actionsRequired": {
+          "type": "array",
+          "items": {
+            "$ref": "ActionRequired"
+          }
+        },
+        "activeActions": {
+          "type": "array",
+          "description": "Actions currently being performed on this working environment",
+          "items": {
+            "type": "string"
+          }
+        },
+        "replicationProperties": {
+          "$ref": "ReplicationProperties"
+        },
+        "schedules": {
+          "type": "array",
+          "items": {
+            "$ref": "VsaSchedule"
+          }
+        },
+        "svms": {
+          "type": "array",
+          "items": {
+            "$ref": "Svm"
+          }
+        },
+        "workingEnvironmentType": {
+          "type": "string"
+        },
+        "supportRegistrationProperties": {
+          "$ref": "SupportRegistrationProperties"
+        },
+        "supportRegistrationInformation": {
+          "type": "array",
+          "items": {
+            "$ref": "SupportRegistrationInformation"
+          }
+        },
+        "capacityFeatures": {
+          "$ref": "CapacityFeatures"
+        },
+        "encryptionProperties": {
+          "$ref": "EncryptionProperties"
+        },
+        "supportedFeatures": {
+          "$ref": "SupportedFeatures"
+        }
+      }
+    },
+    "MaxDisksAllow": {
+      "id": "MaxDisksAllow",
+      "required": [
+        "numOfDisks"
+      ],
+      "properties": {
+        "numOfDisks": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "Capacity": {
+      "id": "Capacity",
+      "description": "",
+      "required": [
+        "size",
+        "unit"
+      ],
+      "properties": {
+        "size": {
+          "type": "number",
+          "format": "double",
+          "description": "Size"
+        },
+        "unit": {
+          "type": "string",
+          "description": "Unit"
+        }
+      }
+    },
+    "InterClusterLif": {
+      "id": "InterClusterLif",
+      "required": [
+        "name",
+        "address",
+        "port",
+        "node",
+        "status",
+        "peered"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "port": {
+          "type": "string"
+        },
+        "node": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "peered": {
+          "type": "boolean"
+        }
+      }
+    },
+    "TimePoint": {
+      "id": "TimePoint",
+      "required": [
+        "day",
+        "hour",
+        "minute"
+      ],
+      "properties": {
+        "day": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "hour": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "minute": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  }
+}
